@@ -22,13 +22,12 @@ public class Article {
     @EqualsAndHashCode.Include
     private String name;
 
-    @Column(name = "date")
+    @Column(name = "date", nullable = false)
     @EqualsAndHashCode.Include
     private LocalDate date;
 
     @ManyToOne
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private Autor autor;
 
     @ManyToMany(fetch = FetchType.LAZY)
@@ -38,6 +37,5 @@ public class Article {
         inverseJoinColumns = @JoinColumn(name = "reader_id")
     )
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private List<Reader> readers;
 }

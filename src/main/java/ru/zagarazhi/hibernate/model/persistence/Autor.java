@@ -26,7 +26,7 @@ public class Autor {
     @EqualsAndHashCode.Include
     private String lastName;
 
-    @Column(name = "birthday")
+    @Column(name = "birthday", nullable = false)
     @EqualsAndHashCode.Include
     private LocalDate birthday;
 

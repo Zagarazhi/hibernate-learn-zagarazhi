@@ -31,6 +31,5 @@ public class Reader {
 
     @ManyToMany(mappedBy = "readers")
     @ToString.Exclude
-    @EqualsAndHashCode.Exclude
     private List<Article> articles;
 }

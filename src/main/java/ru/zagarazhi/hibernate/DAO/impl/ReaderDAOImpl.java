@@ -12,6 +12,15 @@ import ru.zagarazhi.hibernate.util.SessionUtil;
 
 public class ReaderDAOImpl implements ReaderDAO {
 
+    private final int MAX_COUNT_OF_ARTICLES = 10;
+
+    private boolean isCorrect(Reader reader) {
+        if(reader.getArticles() != null){
+            return reader.getArticles().size() <= MAX_COUNT_OF_ARTICLES;
+        }
+        return true;
+    }
+
     @Override
     public Optional<Reader> findById(Long id) {
         Session session = SessionUtil.createSession();
@@ -34,6 +43,7 @@ public class ReaderDAOImpl implements ReaderDAO {
 
     @Override
     public Reader save(Reader item) {
+        if(!isCorrect(item)) return item;
         Session session = SessionUtil.createSession();
         Transaction transaction = session.beginTransaction();
 
@@ -47,6 +57,7 @@ public class ReaderDAOImpl implements ReaderDAO {
 
     @Override
     public Optional<Reader> update(Long key, Reader item) {
+        if(!isCorrect(item)) return Optional.empty();
         return Optional.empty();
     }
 

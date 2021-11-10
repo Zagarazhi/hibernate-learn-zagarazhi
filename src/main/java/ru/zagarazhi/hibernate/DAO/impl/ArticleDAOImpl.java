@@ -12,6 +12,15 @@ import ru.zagarazhi.hibernate.util.SessionUtil;
 
 public class ArticleDAOImpl implements ArticleDAO{
 
+    private boolean isCorrect(Article article) {
+        if(article.getAutor() != null 
+                && article.getDate() != null
+                && article.getAutor().getBirthday() != null){
+            return article.getAutor().getBirthday().isBefore(article.getDate());
+        }
+        return false;
+    }
+
     @Override
     public Optional<Article> findById(Long id) {
         Session session = SessionUtil.createSession();
@@ -34,6 +43,8 @@ public class ArticleDAOImpl implements ArticleDAO{
 
     @Override
     public Article save(Article item) {
+        System.out.println(item.toString());
+        if(!isCorrect(item)) return item;
         Session session = SessionUtil.createSession();
         Transaction transaction = session.beginTransaction();
 
@@ -42,11 +53,13 @@ public class ArticleDAOImpl implements ArticleDAO{
         transaction.commit();
         session.close();
 
+        System.out.println(item.toString());
         return item;
     }
 
     @Override
     public Optional<Article> update(Long key, Article item) {
+        if(!isCorrect(item)) return Optional.empty();;
         return Optional.empty();
     }
 
